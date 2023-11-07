@@ -10,7 +10,7 @@ export default function() {
         <Topbar />
         <Center h={"90%"}>
             <VStack gap={0}>
-                <Text fontWeight={"bold"} color={"#C86FC9"} fontSize={['4xl',"8xl"]} mb={-6} pb={0}>Where Tails Begin.</Text>
+                <Text fontWeight={"bold"} color={"#C86FC9"} fontSize={['4xl',"8xl"]} mb={[-2, -6]} pb={0}>Where Tails Begin.</Text>
                 <Text  fontSize={["xl", "4xl"]} color={"white"} fontWeight={"semibold"}>Your New Best Friend Is a Click Away!</Text>
                 <HStack mt={2}>
                     <Button colorScheme='purple'>Get Started</Button>

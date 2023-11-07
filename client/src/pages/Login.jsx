@@ -8,17 +8,19 @@ import LoginForm from '../components/LoginForm'
 export default function Login() {
   return (
     <Center w={"100vw"} h="100vh" bg={"#E7e7e7"}  >
-        <HStack w="1200px" h={"650px"} gap={0} borderRadius={"2xl"} shadow={"2xl"}>
-            <Center w={"50%"} h={"full"} bg="blue" backgroundImage={logInImage} backgroundPosition={"center"} backgroundSize={"cover"}  borderLeftRadius={"inherit"}>
+        <HStack w={["100vw","1200px"]} h={["full","650px"]} gap={0} borderRadius={["none","2xl"]} shadow={"2xl"} flexDirection={["column", 'row']}>
+            <Center w={["full","50%"]} h={["auto","full"]} bg="blue" backgroundImage={logInImage} backgroundPosition={"center"} backgroundSize={"cover"}  borderLeftRadius={"inherit"} display={["none","flex"]}>
                 <Center w={'full'} h={"full"} bg={"rgb(0,0,0,0.45)"} borderLeftRadius={"inherit"} flexDirection={"column"}>
-                <Text color={'white'} fontSize={"8xl"} fontWeight={'bold'} textAlign={"center"} lineHeight={"80px"} >Welcome Back!</Text>
+                <Text color={'white'} fontSize={["6xl","8xl"]} fontWeight={'bold'} textAlign={"center"} lineHeight={["60px","80px"]} >Welcome Back!</Text>
                 <Text fontSize={"lg"} color={'white'} textAlign={"center"} w={"80%"} pt={4}>Hope you're having a good day! Log back in to see what new pets are available for adoption in your area.</Text>
-                <HStack color={"white"} pt={4}><Text>Don't have an account?</Text><ChakraLink as={ReactRouterLink} to='/register'>Sign Up</ChakraLink></HStack>
+                <HStack color={"white"} pt={4} pb={1}><Text>Don't have an account?</Text><ChakraLink as={ReactRouterLink} to='/register'>Sign Up</ChakraLink></HStack>
                 </Center>
             </Center>
-            <Center w={"50%"} h={"full"} bg={"white"} p={4} borderRightRadius={"inherit"}>
+            <Center w={["full","50%"]} h={"full"} bg={"white"} p={4} borderRightRadius={"inherit"} alignItems={"center"} flexDirection={"column"}>
                 <LoginForm />
+                <HStack mt={1} display={["flex", "none"]}><Text>Don't have an account?</Text><ChakraLink as={ReactRouterLink} to='/register'>Sign Up</ChakraLink></HStack>
             </Center>
+            
         </HStack>
 
     </Center>
