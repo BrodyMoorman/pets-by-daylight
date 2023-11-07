@@ -5,6 +5,7 @@ import viteLogo from '/vite.svg'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Register from './pages/Register'
+import Login from './pages/Login'
 
 
 function App() {
@@ -13,7 +14,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Home/>} />
-      <Route path="/login" element={<Box>Login</Box>} />
+      <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
     </Routes>
   )
