@@ -8,7 +8,7 @@ Pets By Daylight is a web-based pet adoption application. Created with a MERN st
 
 **Client:** React, Chakra UI, React Router, React Auth Kit.
 
-**Server:** Node, Express, Nodemon, Hardhat
+**Server:** Node, Express, MongoDB, Nodemon, Hardhat
 
 
 ## Deployment
