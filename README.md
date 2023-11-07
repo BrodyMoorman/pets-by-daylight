@@ -19,6 +19,10 @@ Pets By Daylight is a web-based pet adoption application. Created with a MERN st
 ```bash
   cd client
 ```
+  Install Necessary Node Dependancies:  
+```bash
+  npm i
+```
   Start local server hosting react frontend:  
 ```bash
   npm run dev
@@ -26,6 +30,10 @@ Pets By Daylight is a web-based pet adoption application. Created with a MERN st
   In a new terminal, navigate to server directory:  
 ```bash
   cd server
+```
+  Install Necessary Node Dependancies:  
+```bash
+  npm i
 ```
   Start local server running express backend:  
 ```bash
