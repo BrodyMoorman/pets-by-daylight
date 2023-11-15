@@ -36,7 +36,7 @@ export default function PetGrid(props) {
         <Box>
             <Flex w={"full"} justifyContent={"space-between"} alignItems={"flex-end"} mb={2}>
                 <Flex alignItems={"center"}>
-                    <Text fontSize={"xl"}>Searching within&nbsp; </Text> <Text fontSize={"xl"} fontWeight={"semibold"}>{distance}mi&nbsp;</Text> <Text fontSize={"xl"}>of&nbsp; </Text><Text fontSize={"xl"} fontWeight={"semibold"}>{location}</Text>
+                    <Text fontSize={["md","xl"]}>Searching within&nbsp; </Text> <Text fontSize={"xl"} fontWeight={"semibold"}>{distance}mi&nbsp;</Text> <Text fontSize={"xl"}>of&nbsp; </Text><Text fontSize={"xl"} fontWeight={"semibold"}>{location}</Text>
                     <EditIcon ml={4} color={"gray.500"} _hover={{color:"purple.400"}} cursor={"pointer"} fontSize={"xl"} onClick={onOpen} />
                 </Flex>
                 <Flex bg={"white"} p={2} w={"150px"} borderRadius={"lg"} shadow={"lg"}>
