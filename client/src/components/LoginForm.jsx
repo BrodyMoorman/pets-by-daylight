@@ -1,6 +1,7 @@
 import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage, Input, HStack, Button } from '@chakra-ui/react'
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios';
 
 export default function LoginForm() {
     const [isErrorEmail, setIsErrorEmail] = useState(false)
@@ -8,6 +9,10 @@ export default function LoginForm() {
         email: "",
         password: ""
     })
+    const loginUser = (e) => {
+        e.preventDefault();
+        axios.get('/');
+    }
     const handleInputChange = (e) => {
         setInputs({
             ...inputs,
@@ -26,7 +31,7 @@ export default function LoginForm() {
             <FormLabel>Password</FormLabel>
             <Input type='password' name='password' placeholder='password' value={inputs.password} onChange={handleInputChange} />
         </FormControl>
-        <Button colorScheme='purple' w={"full"} mt={4}>Log In</Button>
+        <Button colorScheme='purple' w={"full"} mt={4} onClick={loginUser}>Log In</Button> 
     </VStack>
   )
 }

@@ -6,6 +6,14 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
+<<<<<<< Updated upstream
+=======
+import Dashboard from './pages/Dashboard'
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:8000'
+axios.defaults.withCredentials = true;
+>>>>>>> Stashed changes
 
 
 function App() {

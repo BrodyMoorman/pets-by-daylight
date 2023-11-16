@@ -1,9 +1,12 @@
 import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage, Input, HStack, Button } from '@chakra-ui/react'
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 
 export default function SignUpForm() {
+    const navigate = useNavigate ();
     const [isErrorEmail, setIsErrorEmail] = useState(false)
     const [inputs, setInputs] = useState({
         email: "",
@@ -12,6 +15,24 @@ export default function SignUpForm() {
         password: "",
         confirm: ""
     })
+    const registerUser = async (e) => {
+        e.preventDefault();
+        const {username, email, password} = inputs;
+        try {
+            const {data} = await axios.post('/register', {
+                username, email, password
+            })
+            if (data.error) {
+                alert(data.error);
+            } else {
+                setData({})
+                alert("Login Successful")
+                navigate('/login')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
     const handleInputChange = (e) => {
         setInputs({
             ...inputs,
@@ -45,7 +66,7 @@ export default function SignUpForm() {
             <FormLabel>Confirm Password</FormLabel>
             <Input type='password' name='confirm' placeholder='password' value={inputs.confirm} onChange={handleInputChange} />
         </FormControl>
-        <Button colorScheme='purple' w={"full"} mt={4}>Sign Up</Button>
+        <Button colorScheme='purple' w={"full"} mt={4} onClick={registerUser}>Sign Up</Button>
     </VStack>
   )
 }
