@@ -2,7 +2,7 @@ import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage,
 import React from 'react'
 import { useState } from 'react'
 
-export default function LoginForm() {
+export default function LoginForm(props) {
     const [isErrorEmail, setIsErrorEmail] = useState(false)
     const [inputs, setInputs] = useState({
         email: "",
@@ -16,7 +16,7 @@ export default function LoginForm() {
     }
   return (
     <VStack w={"75%"} justifyContent={"center"} alignItems={"center"}>
-        <Text fontSize={"3xl"} fontWeight={"semibold"} mb={6}>Log In</Text>
+        <Text fontSize={"3xl"} fontWeight={"semibold"} mb={6}>Log In {props.name}</Text>
         <FormControl isInvalid={isErrorEmail}>
             <FormLabel>Email</FormLabel>
             <Input type='email' name='email' placeholder='john@example.com' value={inputs.email} onChange={handleInputChange} />
