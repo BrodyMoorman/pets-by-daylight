@@ -1,4 +1,4 @@
-const User = require('../models/mongo') 
+const User = require('../models/usersSchema') 
  
  const test = (req, res) => {
     res.json('test is working')
@@ -6,15 +6,9 @@ const User = require('../models/mongo')
 
  const registerUser = async (req, res) => {
    try {
-      const {username, email, password} = req.body
+      const {first_name, last_name, email, password} = req.body
       // check if name was entered
-      /*
-      if (!username) {
-         return res.json({
-            error: 'username is required'
-         })
-      };
-      */
+      
       if (!password) {
          return res.json({
             error: 'Password is required'
@@ -28,11 +22,11 @@ const User = require('../models/mongo')
          })
       }
 
-      const user = await User.create({
-         username, email, password
+      const user = await User.collection.insertOne({
+         password: password, email: email, first_name: first_name, last_name: last_name,
       })
-
-      return res.json()
+      
+      return res.json(user)
    } catch (error) {
       console.log(error)
    }
