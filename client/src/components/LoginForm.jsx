@@ -2,16 +2,33 @@ import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage,
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
 
 export default function LoginForm() {
+    const navigate = useNavigate();
     const [isErrorEmail, setIsErrorEmail] = useState(false)
     const [inputs, setInputs] = useState({
         email: "",
         password: ""
     })
-    const loginUser = (e) => {
+    const loginUser = async (e) => {
         e.preventDefault();
-        axios.get('/');
+        const {email, password} = inputs;
+        try {
+            const {data} = await axios.post('/login', {
+                email: email,
+                password: password
+            })
+            if (data.error) {
+                alert(data.error);
+            }
+            else {
+                alert('login successful');
+                navigate('/')
+            }
+        } catch (error) {
+
+        }
     }
     const handleInputChange = (e) => {
         setInputs({

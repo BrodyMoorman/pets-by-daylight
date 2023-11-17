@@ -7,6 +7,6 @@ const applicationsSchema = new Schema({
 })
 
 
-const Applications = mongoose.model("Applications", applicationsSchema)
+const Application = mongoose.model("Application", applicationsSchema, "Applications")
 
-module.exports = Applications;
+module.exports = Application;

@@ -1,10 +1,12 @@
 const User = require('../models/usersSchema') 
+const { hashPassword, comparePassword } = require('../helpers/auth')
  
- const test = (req, res) => {
-    res.json('test is working')
- }
+const test = (req, res) => {
+   res.json('test is working')
+}
 
- const registerUser = async (req, res) => {
+
+const registerUser = async (req, res) => {
    try {
       const {first_name, last_name, email, password} = req.body
       // check if name was entered
@@ -22,17 +24,47 @@ const User = require('../models/usersSchema')
          })
       }
 
+      const hashedPassword = await hashPassword(password)
+
       const user = await User.collection.insertOne({
-         password: password, email: email, first_name: first_name, last_name: last_name,
+         password: hashedPassword, email: email, first_name: first_name, last_name: last_name,
       })
       
       return res.json(user)
    } catch (error) {
       console.log(error)
    }
- }
+};
 
- module.exports = {
-    test,
-    registerUser,
- }
+const loginUser = async (req, res) => {
+   try {
+      const {email, password} = req.body;
+
+      //check if user exists
+      const user = await User.collection.findOne({email});
+      if (!user) {
+         return res.json({
+            error: 'No user found'
+         })
+      }
+
+      //check if password match
+      const match = await comparePassword(password, user.password)
+      if (match) {
+         res.json('passwords match')
+      }
+      if (!match) {
+         res.json({
+            error: 'Passwords do not match'
+         })
+      }
+   } catch (error) {
+      console.log(error);
+   }
+}
+
+module.exports = {
+   test,
+   registerUser,
+   loginUser,
+}

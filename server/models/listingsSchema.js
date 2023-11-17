@@ -17,6 +17,6 @@ const listingsSchema = new Schema ({
     image_url: String,
 });
 
-const Listings = mongoose.model("Listings", listingsSchema);
+const Listing = mongoose.model("Listing", listingsSchema, "Listings");
 
-module.exports = Listings;
+module.exports = Listing;
