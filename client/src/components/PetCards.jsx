@@ -10,8 +10,8 @@ export default function PetCard(props) {
 
     return (
     // props.petImage, props.desc, props.species, props.cost, props.name, props.id id = 
-        <Card maxW='sm' onClick={handleClick} cursor= "pointer">
-    <CardBody shadow= "md" _hover={{shadow:"2xl"}}>
+        <Card maxW='xs' onClick={handleClick} cursor= "pointer" >
+    <CardBody shadow= "md" _hover={{shadow:"2xl"}} transition={".3s"}>
         <Image 
         src={props.image}
         alt={props.desc}
