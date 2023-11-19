@@ -11,6 +11,7 @@ router.use(
 )
 
 router.get('/', test);
-router.post('/register', registerUser)
+router.post('/register', registerUser);
+router.post('/create-listing', authController.createListing);
 
 module.exports = router;

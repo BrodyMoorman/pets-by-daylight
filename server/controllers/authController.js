@@ -55,7 +55,7 @@ const nodemailer = require('nodemailer');
          from: 'your_email@gmail.com',
          to: email,
          subject: 'Email Verification',
-         text: `Click the following link to verify your email: http://localhost:3000/verify/${verificationToken}`
+         text: `Click here to verify your email: http://localhost:3000/verify/${verificationToken}`
        };
 
        transporter.sendMail(mailOptions, (error, info) => {
@@ -65,7 +65,7 @@ const nodemailer = require('nodemailer');
          console.log('Email sent: ' + info.response);
        });
 
-       res.send('Registration successful. Check your email for verification.');
+       res.send('Registration successful. Check your email for verification link.');
 
 
 
@@ -75,11 +75,69 @@ const nodemailer = require('nodemailer');
       console.log(error)
    }
  }
+
+ const createListing = async (req, res) => {
+   try {
+     const {
+       pet_name,
+       pet_breed,
+       pet_species,
+       female,
+       pet_color,
+       pet_birthday,
+       pet_weight,
+       pet_description,
+       vaccinated,
+       image_urls,
+       adoption_fee,
+       zip_code
+     } = req.body;
+ 
+     const { _id: owner_id, email: owner_email } = req.user;
+ 
+     const newListing = await Listing.create({
+       owner_id,
+       owner_email,
+       pet_name,
+       pet_breed,
+       pet_species,
+       female,
+       pet_color,
+       pet_birthday,
+       pet_weight,
+       pet_description,
+       vaccinated,
+       image_urls,
+       adoption_fee,
+       zip_code
+     });
+ 
+     res.status(201).json(newListing);
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({ error: 'Error' });
+   }
+ };
+
+ const handleImageUpload = async (req, res) => {
+   try {
+     const { images } = req.files;
+     const imageUrls = images.map(image => `/uploads/${image.filename}`);
+ 
+     res.json({ message: 'Images uploaded successfully', imageUrls });
+   } catch (error) {
+     console.error(error);
+     res.status(500).json({ error: 'Internal Server Error' });
+   }
+ };
  
 
  
 
  module.exports = {
     test,
+    generateToken,
     registerUser,
+    createListing,
+    handleImageUpload
  }

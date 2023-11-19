@@ -21,19 +21,27 @@ const usersSchema = new Schema({
 })
 
 const listingsSchema = new Schema ({
-    owner_id: Schema.ObjectId,
-    owner_email: String,
-    owner_phone: Number,
-    pet_name: String,
-    pet_breed: String,
-    pet_species: String,
-    female: Boolean,
-    pet_color: String,
-    pet_birthday: String,
-    pet_weight: String,
-    pet_description: String,
-    vaccinated: Boolean,
-    image_url: String,
+    owner_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Application',
+        required: true
+      },
+      owner_email: {
+        type: String,
+        required: true
+      },
+      pet_name: String,
+      pet_breed: String,
+      pet_species: String,
+      female: Boolean,
+      pet_color: String,
+      pet_birthday: String,
+      pet_weight: String,
+      pet_description: String,
+      vaccinated: Boolean,
+      image_urls: [String],
+      adoption_fee: Number,
+      zip_code: Number
 })
 
 const applicationsSchema = new Schema({
