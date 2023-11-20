@@ -123,11 +123,10 @@ const nodemailer = require('nodemailer');
    try {
      const { images } = req.files;
      const imageUrls = images.map(image => `/uploads/${image.filename}`);
- 
      res.json({ message: 'Images uploaded successfully', imageUrls });
    } catch (error) {
      console.error(error);
-     res.status(500).json({ error: 'Internal Server Error' });
+     res.status(500).json({ error: 'Error' });
    }
  };
  
