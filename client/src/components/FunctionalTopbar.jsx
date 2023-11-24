@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import {
     Box,
     Flex,
@@ -22,13 +23,14 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
+
   } from '@chakra-ui/react'
   import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
   import logo from '../assets/PBDLogoDark.png'
   import NewListingForm from './NewListingForm'
   
-
   
+
   const Links = ['Home', 'Favorites', 'My Listings', 'Add Listing']
   
   const NavLink = (props) => {
@@ -52,10 +54,35 @@ import {
   
   export default function FunctionalTopbar(props) {
 
-    const { isOpen, onOpen, onClose } = useDisclosure()
-
+    const [isOpen, setIsOpen] = useState(false);
+  
+    const onClose = () => setIsOpen(false);
+    const onOpen = () => setIsOpen(true);
+  
     return (
       <>
+        <Button onClick={onOpen}></Button>
+  
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay/>
+          <ModalContent>
+            <ModalHeader>Add New Listing</ModalHeader>
+            <ModalCloseButton/>
+            <ModalBody>
+              <p>Your modal content goes here.</p>
+            </ModalBody>
+          </ModalContent>
+        </Modal>
+{/*
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button variant="ghost">Secondary Action</Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+  */}
         <Box bg={useColorModeValue('white', 'gray.900')} pr={4} w={["100vw","99.12vw"]} overflow={"hidden"}>
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton
