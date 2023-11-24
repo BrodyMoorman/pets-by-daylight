@@ -15,13 +15,21 @@ import {
     useColorModeValue,
     Stack,
     Image,
+    Modal,
+    ModalOverlay,
+    ModalContent,
+    ModalHeader,
+    ModalFooter,
+    ModalBody,
+    ModalCloseButton,
   } from '@chakra-ui/react'
   import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
   import logo from '../assets/PBDLogoDark.png'
+  import NewListingForm from './NewListingForm'
   
 
   
-  const Links = ['Home', 'Favorites', 'My Listings']
+  const Links = ['Home', 'Favorites', 'My Listings', 'Add Listing']
   
   const NavLink = (props) => {
     const { children } = props
@@ -43,8 +51,9 @@ import {
   }
   
   export default function FunctionalTopbar(props) {
+
     const { isOpen, onOpen, onClose } = useDisclosure()
-  
+
     return (
       <>
         <Box bg={useColorModeValue('white', 'gray.900')} pr={4} w={["100vw","99.12vw"]} overflow={"hidden"}>
