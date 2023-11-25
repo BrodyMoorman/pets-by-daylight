@@ -14,7 +14,10 @@ const listingsSchema = new Schema ({
     pet_weight: String,
     pet_description: String,
     vaccinated: Boolean,
-    image_url: String,
+    //this needs to be updated to dynamic array of strings to support multiple pictures
+    image_url: [String],
+    zip_code: Number,
+
 });
 
 const Listing = mongoose.model("Listing", listingsSchema, "Listings");

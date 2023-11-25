@@ -1,5 +1,6 @@
 const User = require('../models/usersSchema') 
 const { hashPassword, comparePassword } = require('../helpers/auth')
+const jwt = require('jsonwebtoken');
  
 const test = (req, res) => {
    res.json('test is working')
@@ -27,7 +28,12 @@ const registerUser = async (req, res) => {
       const hashedPassword = await hashPassword(password)
 
       const user = await User.collection.insertOne({
-         password: hashedPassword, email: email, first_name: first_name, last_name: last_name,
+         password: hashedPassword, 
+         email: email, 
+         first_name: first_name, 
+         last_name: last_name,
+         is_verified: false,
+         verification_token: "",
       })
       
       return res.json(user)
@@ -51,7 +57,11 @@ const loginUser = async (req, res) => {
       //check if password match
       const match = await comparePassword(password, user.password)
       if (match) {
-         res.json('passwords match')
+         jwt.sign({email: user.email, id: user._id, first_name: user.first_name, last_name: user.last_name}, process.env.TOKEN_SECRET, {}, (err, token) => {
+            if (err) throw err;
+            res.cookie('token', token).json*(user)
+         })
+
       }
       if (!match) {
          res.json({

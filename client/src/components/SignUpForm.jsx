@@ -20,13 +20,16 @@ export default function SignUpForm() {
         const {first, last, email, password} = inputs;
         try {
             const {data} = await axios.post('/register', {
-                first_name: first, last_name: last, email: email, password: password,
+                first_name: first, 
+                last_name: last, 
+                email: email, 
+                password: password,
             })
             if (data.error) {
                 alert(data.error);
             } else {
                 //setData({})
-                alert("Login Successful")
+                alert("Sign Up Successful")
                 navigate('/login')
             }
         } catch (error) {

@@ -1,8 +1,8 @@
 import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage, Input, HStack, Button } from '@chakra-ui/react'
 import React from 'react'
 import { useState } from 'react'
-import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 export default function LoginForm() {
     const navigate = useNavigate();
@@ -17,17 +17,17 @@ export default function LoginForm() {
         try {
             const {data} = await axios.post('/login', {
                 email: email,
-                password: password
+                password: password,
             })
             if (data.error) {
                 alert(data.error);
-            }
-            else {
-                alert('login successful');
-                navigate('/')
+                alert("hehe");
+            } else {
+                alert("Login Successful!")
+                navigate('/home')
             }
         } catch (error) {
-
+            console.log(error);
         }
     }
     const handleInputChange = (e) => {

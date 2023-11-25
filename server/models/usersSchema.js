@@ -3,23 +3,12 @@ const {Schema} = mongoose;
 
 
 const usersSchema = new Schema({
-    password: {
-        String,
-        //required: true,
-    },
-    email: {
-        String,
-        //required: true,
-        //unique: true,
-    },
-    first_name: {
-        String,
-        //required: true,
-    },
-    last_name: {
-        String,
-        //required: true,
-    },
+    password: String,
+    email: String,
+    first_name: String,
+    last_name: String,
+    is_verified: Boolean,
+    verification_token: String,
 })
 
 
