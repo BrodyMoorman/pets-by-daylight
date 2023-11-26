@@ -28,7 +28,6 @@ export default function SignUpForm() {
             if (data.error) {
                 alert(data.error);
             } else {
-                //setData({})
                 alert("Sign Up Successful")
                 navigate('/login')
             }

@@ -27,9 +27,6 @@ export default function PetFilter() {
         }
     }
 
-    const listingFilter = async(e) => {
-        e.preventDefault(e);
-    }
   return (
     <VStack p={4} alignItems={"flex-start"} shadow={'2xl'} borderRadius={"2xl"} bg={"white"} h={"fit-content"} >
         <Text fontSize={"2xl"} fontWeight={"semibold"} pb={2}>Filters</Text>

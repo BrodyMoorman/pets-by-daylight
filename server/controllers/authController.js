@@ -57,11 +57,11 @@ const loginUser = async (req, res) => {
       //check if password match
       const match = await comparePassword(password, user.password)
       if (match) {
-         jwt.sign({email: user.email, id: user._id, first_name: user.first_name, last_name: user.last_name}, process.env.TOKEN_SECRET, {}, (err, token) => {
+         const token = jwt.sign({email: user.email, id: user._id, first_name: user.first_name, last_name: user.last_name}, process.env.TOKEN_SECRET, {}, (err, token) => {
             if (err) throw err;
             res.cookie('token', token).json*(user)
          })
-
+         res.status(200).json({ token: token, user: user})
       }
       if (!match) {
          res.json({

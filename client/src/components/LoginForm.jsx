@@ -9,7 +9,7 @@ export default function LoginForm() {
     const [isErrorEmail, setIsErrorEmail] = useState(false)
     const [inputs, setInputs] = useState({
         email: "",
-        password: ""
+        password: "",
     })
     const loginUser = async (e) => {
         e.preventDefault();
@@ -21,8 +21,8 @@ export default function LoginForm() {
             })
             if (data.error) {
                 alert(data.error);
-                alert("hehe");
             } else {
+                console.log(1)
                 alert("Login Successful!")
                 navigate('/home')
             }
