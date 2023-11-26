@@ -56,6 +56,21 @@ export default function PetDisplay() {
         <Text fontSize={"4xl"} fontWeight={"semibold"}>Description</Text>
         <Divider  w={"50%"}/>
         <Text w={"60%"}>Buddy is a frendly boy, he loves playing and singing and being an awesome dude. </Text>
+        <Text fontSize={"4xl"} fontWeight={"semibold"}>Contact</Text>
+        <Divider  w={"50%"}/>
+        <VStack>
+            <HStack>
+                <Text fontWeight={"semibold"}>Email:</Text>
+                <Text> example@gmail.com </Text>
+            </HStack>
+            <Divider />
+            <HStack>
+                <Text fontWeight={"semibold"}>Phone:</Text>
+                <Text> 123-456-7890 </Text>
+            </HStack>
+
+        </VStack>
+
         </VStack>
          
     </Flex>

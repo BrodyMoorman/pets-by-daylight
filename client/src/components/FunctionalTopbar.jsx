@@ -31,7 +31,7 @@ import {
   
   
 
-  const Links = ['Home', 'Favorites', 'My Listings', 'Add Listing']
+  const Links = ['Home', 'Favorites', 'My Listings']
   
   const NavLink = (props) => {
     const { children } = props
@@ -61,15 +61,13 @@ import {
   
     return (
       <>
-        <Button onClick={onOpen}></Button>
-  
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay/>
           <ModalContent>
             <ModalHeader>Add New Listing</ModalHeader>
             <ModalCloseButton/>
             <ModalBody>
-              <p>Your modal content goes here.</p>
+              <NewListingForm/>
             </ModalBody>
           </ModalContent>
         </Modal>
@@ -98,6 +96,19 @@ import {
                 {Links.map((link) => (
                   <NavLink key={link}>{link}</NavLink>
                 ))}
+                <Box
+                  as="a"
+                  px={2}
+                  py={1}
+                  rounded={'md'}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                  cursor={'pointer'}
+                  onClick={onOpen}>
+                  Add Listing
+                </Box>
               </HStack>
             </HStack>
             <Flex alignItems={'center'}>
@@ -119,7 +130,7 @@ import {
                   <MenuItem>Link 1</MenuItem>
                   <MenuItem>Link 2</MenuItem>
                   <MenuDivider />
-                  <MenuItem>Link 3</MenuItem>
+                  <MenuItem color={"red.300"}>Log Out</MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
