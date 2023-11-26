@@ -20,7 +20,7 @@ import {
 
   } from '@chakra-ui/react'
 
-  import { useState } from 'react'
+  import { useState, useEffect } from 'react'
   import ImageUploadPreview from './ImageUploadPreview'
 
 export default function NewListingForm() {
@@ -59,6 +59,13 @@ export default function NewListingForm() {
     console.log(images)
     console.log(values)
   }
+
+  useEffect(() => {
+    setValues({...values, images: images})
+    console.log(images)
+    console.log(values)
+  }
+  , [images])
     
     return (
       <VStack>

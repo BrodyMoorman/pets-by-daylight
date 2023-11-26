@@ -1,6 +1,8 @@
 import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage, Input, HStack, Button } from '@chakra-ui/react'
 import React from 'react'
 import { useState } from 'react'
+import axios from 'axios'
+
 
 
 export default function SignUpForm() {
@@ -18,6 +20,29 @@ export default function SignUpForm() {
             [e.target.name]: e.target.value
         })
     }
+    const registerUser = async (e) => {
+        e.preventDefault();
+        const {first, last, email, password} = inputs;
+        try {
+            const {data} = await axios.post('http://localhost:8000/register', {
+                first_name: first, 
+                last_name: last, 
+                email: email, 
+                password: password,
+            })
+            if (data.error) {
+                alert(data.error);
+            } else {
+                alert("Sign Up Successful")
+                navigate('/login')
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    
   return (
     <VStack w={"75%"} justifyContent={"center"} alignItems={"center"}>
         <Text fontSize={"3xl"} fontWeight={"semibold"} mb={6}>Sign Up</Text>
@@ -45,7 +70,7 @@ export default function SignUpForm() {
             <FormLabel>Confirm Password</FormLabel>
             <Input type='password' name='confirm' placeholder='password' value={inputs.confirm} onChange={handleInputChange} />
         </FormControl>
-        <Button colorScheme='purple' w={"full"} mt={4}>Sign Up</Button>
+        <Button colorScheme='purple' w={"full"} mt={4} onClick={registerUser}>Sign Up</Button>
     </VStack>
   )
 }

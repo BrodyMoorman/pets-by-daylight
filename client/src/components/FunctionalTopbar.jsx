@@ -26,6 +26,8 @@ import {
 
   } from '@chakra-ui/react'
   import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+  import { useSignOut } from 'react-auth-kit'
+  import { useAuthUser } from 'react-auth-kit'
   import logo from '../assets/PBDLogoDark.png'
   import NewListingForm from './NewListingForm'
   
@@ -53,11 +55,17 @@ import {
   }
   
   export default function FunctionalTopbar(props) {
+    const signOut = useSignOut()
+    const auth = useAuthUser();
 
     const [isOpen, setIsOpen] = useState(false);
   
     const onClose = () => setIsOpen(false);
     const onOpen = () => setIsOpen(true);
+
+    const handleLogout = () => {
+      signOut()
+    }
   
     return (
       <>
@@ -118,19 +126,20 @@ import {
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
-                  minW={0}>
-                  <Avatar
-                    size={'sm'}
-                    src={
-                      'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'
-                    }
-                  />
+                  minW={0}
+                  p={1}
+                  display={"flex"}
+                  alignItems={'center'}
+                  >
+
+                  
+                  {auth().first_name + " " + auth().last_name}
                 </MenuButton>
                 <MenuList>
                   <MenuItem>Link 1</MenuItem>
                   <MenuItem>Link 2</MenuItem>
                   <MenuDivider />
-                  <MenuItem color={"red.300"}>Log Out</MenuItem>
+                  <MenuItem color={"red.300"}onClick={handleLogout} >Log Out</MenuItem>
                 </MenuList>
               </Menu>
             </Flex>
