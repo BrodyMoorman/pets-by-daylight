@@ -26,12 +26,14 @@ import {
 
   } from '@chakra-ui/react'
   import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons'
+  import { useSignOut } from 'react-auth-kit'
+  import { useAuthUser } from 'react-auth-kit'
   import logo from '../assets/PBDLogoDark.png'
   import NewListingForm from './NewListingForm'
   
   
 
-  const Links = ['Home', 'Favorites', 'My Listings', 'Add Listing']
+  const Links = ['Home', 'Favorites', 'My Listings']
   
   const NavLink = (props) => {
     const { children } = props
@@ -53,23 +55,27 @@ import {
   }
   
   export default function FunctionalTopbar(props) {
+    const signOut = useSignOut()
+    const auth = useAuthUser();
 
     const [isOpen, setIsOpen] = useState(false);
   
     const onClose = () => setIsOpen(false);
     const onOpen = () => setIsOpen(true);
+
+    const handleLogout = () => {
+      signOut()
+    }
   
     return (
       <>
-        <Button onClick={onOpen}></Button>
-  
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay/>
           <ModalContent>
             <ModalHeader>Add New Listing</ModalHeader>
             <ModalCloseButton/>
             <ModalBody>
-              <p>Your modal content goes here.</p>
+              <NewListingForm/>
             </ModalBody>
           </ModalContent>
         </Modal>
@@ -98,6 +104,19 @@ import {
                 {Links.map((link) => (
                   <NavLink key={link}>{link}</NavLink>
                 ))}
+                <Box
+                  as="a"
+                  px={2}
+                  py={1}
+                  rounded={'md'}
+                  _hover={{
+                    textDecoration: 'none',
+                    bg: useColorModeValue('gray.200', 'gray.700'),
+                  }}
+                  cursor={'pointer'}
+                  onClick={onOpen}>
+                  Add Listing
+                </Box>
               </HStack>
             </HStack>
             <Flex alignItems={'center'}>
@@ -107,19 +126,20 @@ import {
                   rounded={'full'}
                   variant={'link'}
                   cursor={'pointer'}
-                  minW={0}>
-                  <Avatar
-                    size={'sm'}
-                    src={
-                      'https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.webp'
-                    }
-                  />
+                  minW={0}
+                  p={1}
+                  display={"flex"}
+                  alignItems={'center'}
+                  >
+
+                  
+                  {auth().first_name + " " + auth().last_name}
                 </MenuButton>
                 <MenuList>
                   <MenuItem>Link 1</MenuItem>
                   <MenuItem>Link 2</MenuItem>
                   <MenuDivider />
-                  <MenuItem>Link 3</MenuItem>
+                  <MenuItem color={"red.300"}onClick={handleLogout} >Log Out</MenuItem>
                 </MenuList>
               </Menu>
             </Flex>

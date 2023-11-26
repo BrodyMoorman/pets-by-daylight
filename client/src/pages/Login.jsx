@@ -20,7 +20,7 @@ export default function Login() {
                     </Center>
                 </Center>
                 <Center w={["full","50%"]} h={"full"} bg={["none","white"]} p={4} borderRightRadius={"inherit"} alignItems={"center"} flexDirection={"column"}>
-                    <LoginForm />
+                    <LoginForm name="kevin" />
                     <HStack mt={1} display={["flex", "none"]}><Text>Don't have an account?</Text><ChakraLink as={ReactRouterLink} to='/register'>Sign Up</ChakraLink></HStack>
                 </Center>
                 

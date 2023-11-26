@@ -7,6 +7,8 @@ import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
+import PetPage from './pages/PetPage'
+import {RequireAuth} from 'react-auth-kit'
 
 
 function App() {
@@ -17,7 +19,8 @@ function App() {
       <Route path="/" element={<Home/>} />
       <Route path="/login" element={<Login/>} />
       <Route path="/register" element={<Register/>} />
-      <Route path="/home" element={<Dashboard/>} />
+      <Route path="/home" element={<RequireAuth loginPath='/login'><Dashboard/></RequireAuth>} />
+      <Route path="/pets/:id" element={<RequireAuth loginPath='/login'><PetPage/></RequireAuth>} />
     </Routes>
   )
 }
