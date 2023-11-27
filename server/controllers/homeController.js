@@ -4,11 +4,11 @@ const Listing = require("../models/listingsSchema");
 const listingFilter = async (req, res) => {
     try {
 
-        let animal = req.query.animal || "all";
-        let gender = req.query.gender || "all";
-        let age = req.query.age || "all";
-        let fee = parseInt(req.query.fee) || 99999;
-        let search = req.query.search || "";
+        let animal = req.body.query.animal || "all";
+        let gender = req.body.query.gender || "all";
+        let age = req.body.query.age || "all";
+        let fee = parseInt(req.body.query.fee) || 99999;
+        let search = req.body.query.search || "";
 
         const animalOptions = [
             "dog",
@@ -35,17 +35,17 @@ const listingFilter = async (req, res) => {
 
         animal === "all"
             ? (animal = [...animalOptions])
-            : (animal = req.query.animal.split(","))
+            : (animal = req.body.query.animal.split(","))
 
 
         gender === "all" 
             ? (gender = [...genderOptions])
-            : (gender = req.query.gender.split(","));
+            : (gender = req.body.query.gender.split(","));
 
         
         age === "all" 
             ? (age = [...ageOptions])
-            : (age = req.query.age.split(","));
+            : (age = req.body.query.age.split(","));
         
         const petList = await Listing.find(
             {$and: [
@@ -59,7 +59,7 @@ const listingFilter = async (req, res) => {
             ]}
         )
         
-        return petList;
+        return res.json(petList);
         //res.json(animal);
     } catch (err) {
         console.log(err);

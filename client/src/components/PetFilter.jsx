@@ -10,6 +10,13 @@ export default function PetFilter() {
         console.log("Adding Name")
     }
     const [selected, setSelected] = useState([])
+    const [query, setQuery] = useState({
+        animal : [],
+        gender: [],
+        age: [],
+        fee: [],
+        search: ""
+    })
 
     const clearSelected = () => {
         setSelected([])
@@ -19,13 +26,26 @@ export default function PetFilter() {
         return selected.includes(option)
     }
 
-    const callback = (option) => {
-        if (isSelected(option)) {
-            setSelected(selected.filter((item) => item !== option))
-        } else {
-            setSelected([...selected, option])
-        }
+    const setAnimalCallback = (option) => {
+        setQuery({...query, animal: [...query.animal, option]})
+
     }
+
+    const setGenderCallback = (option) => {
+        setQuery({...query, gender: [...query.gender, option]})
+
+    }
+
+    const setAgeCallback = (option) => {
+        setQuery({...query, age: [...query.age, option]})
+            
+    }
+
+    const setFeeCallback = (option) => {
+        setQuery({...query, fee: [...query.fee, option]})
+                
+    }
+
   return (
     <VStack p={4} alignItems={"flex-start"} shadow={'2xl'} borderRadius={"2xl"} bg={"white"} h={"fit-content"} >
         <Text fontSize={"2xl"} fontWeight={"semibold"} pb={2}>Filters</Text>
@@ -51,13 +71,13 @@ export default function PetFilter() {
             </InputRightElement>
         </InputGroup>
         <Text fontWeight={"semibold"}>Animal:</Text>
-        <FilterSelector callback={callback} category="animal" />
+        <FilterSelector callback={setAnimalCallback} category="animal" />
         <Text fontWeight={"semibold"}>Gender:</Text>
-        <FilterSelector callback={callback} category="gender" />
+        <FilterSelector callback={setGenderCallback} category="gender" />
         <Text fontWeight={"semibold"}>Age:</Text>
-        <FilterSelector callback={callback} category="age" />
+        <FilterSelector callback={setAgeCallback} category="age" />
         <Text fontWeight={"semibold"}>Adoption Fee:</Text>
-        <FilterSelector callback={callback} category="fee" />
+        <FilterSelector callback={setFeeCallback} category="fee" />
         {(selected.length) && <Button colorScheme='purple' w={"full"} mt={4} onClick={() => clearSelected()}>Clear Filters</Button>}
     </VStack>
   )

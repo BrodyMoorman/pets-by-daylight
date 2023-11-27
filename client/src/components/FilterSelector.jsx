@@ -1,4 +1,4 @@
-import { Flex, Text, Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react'
+import { Flex, Text, Menu, MenuButton, MenuList, MenuItem, Button, Tag, TagLabel,TagCloseButton } from '@chakra-ui/react'
 import React from 'react'
 import { useState, useEffect  } from 'react'
 import { ChevronDownIcon, CloseIcon, AddIcon } from '@chakra-ui/icons'
@@ -16,7 +16,6 @@ export default function FilterSelector(props) {
         } else {
             setSelected([...selected, option])
         }
-        props.callback(option)
     }
     useEffect(() => {
     switch (props.category) {
@@ -39,6 +38,7 @@ export default function FilterSelector(props) {
     , ["props.category"])
 
   return (
+    <>
     <Menu closeOnSelect={false}>
         <MenuButton as={Button} rightIcon={<ChevronDownIcon fontSize={"xl"} />}  h={"2.5rem"} w={"full"} px={4}  bg="white" border={"1px"} borderColor={"gray.200"} borderRadius={"md"} >
         {(selected.length > 0) ? <Text> {selected.length}  Selected</Text> : <Text color={"gray.500"}>Any</Text>}
@@ -55,6 +55,14 @@ export default function FilterSelector(props) {
 
         </MenuList>
     </Menu>
-
+            <Flex maxW="270px" flexWrap={"wrap"}>
+            {selected.map((option) => {
+                return <Tag size={"md"} key={option.id} m={"2px"} borderRadius={"full"} variant="solid" colorScheme="purple" >
+                    <TagLabel>{option.name}</TagLabel>
+                    <TagCloseButton onClick={()=>handleClick(option)} />
+                </Tag>
+            })}
+            </Flex>
+        </>
   )
 }
