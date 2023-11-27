@@ -22,6 +22,7 @@ import {
 
   import { useState, useEffect } from 'react'
   import ImageUploadPreview from './ImageUploadPreview'
+  import axios from 'axios'
 
 export default function NewListingForm() {
 
@@ -53,19 +54,38 @@ export default function NewListingForm() {
   const removeImage = (image) => {
     setImages(images.filter((img) => img !== image))
   }
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setValues({...values, images: images})
-    console.log(images)
-    console.log(values)
+  const handleSubmit = async (e) => {
+    try {
+      e.preventDefault()
+      const imageUrls = await Promise.all(images.map((image) => imageUpload(image)))
+      setValues({ ...values, images: imageUrls })
+      setTimeout(() => {
+        console.log(values)
+      }, 200)
+      
+
+    } catch (err) {
+      console.log(err)
+    }
+    
+    
+
   }
 
-  useEffect(() => {
-    setValues({...values, images: images})
-    console.log(images)
-    console.log(values)
+  const imageUpload = async (image) => {
+    try {
+    const formData = new FormData();
+    formData.append('file', image)
+    const res = await axios.post('http://localhost:8000/upload', formData)
+    console.log(res.data)
+    return res.data
+    } catch (err) {
+      console.log(err)
+    }
   }
-  , [images])
+
+  
+
     
     return (
       <VStack>
