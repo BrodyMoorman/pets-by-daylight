@@ -66,8 +66,35 @@ const listingFilter = async (req, res) => {
         res.json(err);
     }
 }
+const newListing = async (req, res) => {
+    try {
+        const isFemale = (req.body.gender == "female")
+        const listing = await Listing.collection.insertOne({
+            owner_id: req.body.owner_id,
+            owner_email: req.body.owner_email,
+            owner_phone: req.body.owner_phone,
+            pet_name: req.body.pet_name,
+            pet_breed: req.body.pet_breed,
+            pet_species: req.body.pet_species,
+            female: isFemale,
+            pet_color: req.body.pet_color,
+            pet_birthday: req.body.pet_age,
+            pet_description: req.body.pet_description,
+            vaccinated: req.body.vaccinated,
+            adoption_fee: req.body.adoption_fee,
+            image_url: req.body.images,
+            zip_code: req.body.zip_code,
+        });
+        res.json(listing);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
 
 
 module.exports = {
     listingFilter,
+    newListing,
 }

@@ -23,19 +23,26 @@ import {
   import { useState, useEffect } from 'react'
   import ImageUploadPreview from './ImageUploadPreview'
   import axios from 'axios'
+  import { useAuthUser } from 'react-auth-kit'
 
 export default function NewListingForm() {
+  const auth = useAuthUser()
 
   const [values, setValues] = useState({
-    petName: '',
-    species: '',
-    breed: '',
-    color: '',
-    age: '',
-    updatedVaccinations: false,
-    adoptionFee: '',
-    description: '',
+    owner_id: auth()._id,
+    owner_email: '',
+    owner_phone: '',
+    pet_name: '',
+    pet_species: '',
+    gender:'',
+    pet_breed: '',
+    pet_color: '',
+    pet_age: '',
+    vaccinated: false,
+    adoption_fee: '',
+    pet_description: '',
     images: [],
+    zip_code: ''
   })
   const [images, setImages] = useState([])
 
@@ -44,7 +51,7 @@ export default function NewListingForm() {
       setImages(images.concat(e.target.files[0]))
       e.target.value = null
     }
-    if(e.target.name === 'updatedVaccinations') {
+    if(e.target.name === 'vaccinated') {
       setValues({ ...values, [e.target.name]: e.target.checked })
       return
     }
@@ -58,10 +65,17 @@ export default function NewListingForm() {
     try {
       e.preventDefault()
       const imageUrls = await Promise.all(images.map((image) => imageUpload(image)))
-      setValues({ ...values, images: imageUrls })
+      let data = values;
+      data.images = imageUrls
       setTimeout(() => {
-        console.log(values)
-      }, 200)
+        axios.post('http://localhost:8000/listing/new', data)
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+      }, 600)
       
 
     } catch (err) {
@@ -91,11 +105,11 @@ export default function NewListingForm() {
       <VStack>
         <FormControl isRequired>
           <FormLabel>Pet Name</FormLabel>
-          <Input placeholder='Buddy' name='petName' onChange={handleChange}  />
+          <Input placeholder='Buddy' name='pet_name' onChange={handleChange}  />
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Species</FormLabel>
-          <Select placeholder='Select Species' name='species' onChange={handleChange}>
+          <Select placeholder='Select Species' name='pet_species' onChange={handleChange}>
             <option>Dog</option>
             <option>Cat</option>
             <option>Bird</option>
@@ -107,17 +121,30 @@ export default function NewListingForm() {
         <HStack>
         <FormControl isRequired>
           <FormLabel>Breed</FormLabel>
-          <Input placeholder='German Shepard' name='breed' onChange={handleChange} />
+          <Input placeholder='German Shepard' name='pet_breed' onChange={handleChange} />
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Color</FormLabel>
-          <Input placeholder='Black' name='color' onChange={handleChange} />
+          <Input placeholder='Black' name='pet_color' onChange={handleChange} />
+        </FormControl>
+        </HStack>
+        <HStack w={"full"}>
+        <FormControl isRequired>
+          <FormLabel>Gender</FormLabel>
+          <Select placeholder='Select Gender' name='gender' onChange={handleChange}>
+            <option>Male</option>
+            <option>Female</option>
+          </Select>
+        </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Zip Code</FormLabel>
+          <Input placeholder='11111' name='zip_code' onChange={handleChange} />
         </FormControl>
         </HStack>
         <HStack w={"full"}>
         <FormControl isRequired>
           <FormLabel>Age</FormLabel>
-          <Select placeholder='Select Age' name='age' onChange={handleChange}>
+          <Select placeholder='Select Age' name='pet_age' onChange={handleChange}>
             <option>Baby</option>
             <option>Young</option>
             <option>Adult</option>
@@ -126,7 +153,7 @@ export default function NewListingForm() {
         </FormControl>
         <FormControl isRequired>
           <FormLabel>Updated Vaccinations</FormLabel>
-          <Switch colorScheme='purple' size={"lg"} name='updatedVaccinations' onChange={handleChange} />
+          <Switch colorScheme='purple' size={"lg"} name='vaccinated' onChange={handleChange} />
         </FormControl>
         </HStack>
         <FormControl isRequired>
@@ -138,12 +165,20 @@ export default function NewListingForm() {
               fontSize='1.2em'
               children='$'
             />
-            <Input placeholder='Enter amount' name='adoptionFee' onChange={handleChange} />
+            <Input placeholder='Enter amount' name='adoption_fee' onChange={handleChange} />
           </InputGroup>
         </FormControl>
         <FormControl>
+          <FormLabel>Phone</FormLabel>
+          <Input type='text' name="owner_phone" onChange={handleChange} p={1} />
+        </FormControl>
+        <FormControl>
+          <FormLabel>Email</FormLabel>
+          <Input type='text' name='owner_email' onChange={handleChange} p={1} />
+        </FormControl>
+        <FormControl>
           <FormLabel>Description</FormLabel>
-          <Textarea placeholder='Enter description' name='description' onChange={handleChange} />
+          <Textarea placeholder='Enter description' name='pet_description' onChange={handleChange} />
         </FormControl>
         <FormControl>
           <FormLabel>Images</FormLabel>
