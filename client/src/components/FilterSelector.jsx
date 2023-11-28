@@ -13,9 +13,11 @@ export default function FilterSelector(props) {
         if (isSelected(option)) {
             setSelected(selected.filter((item) => item !== option))
             
+            
         } else {
             setSelected([...selected, option])
         }
+        props.callback(option)
     }
     useEffect(() => {
     switch (props.category) {

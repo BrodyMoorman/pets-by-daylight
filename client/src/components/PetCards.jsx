@@ -1,5 +1,5 @@
 import React from 'react'
-import { Heading, Card, CardBody, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup } from '@chakra-ui/react'
+import { Heading, Card, CardBody, HStack, Image, Stack, Text, Divider, CardFooter, Button, ButtonGroup, } from '@chakra-ui/react'
 import { useState } from 'react'
 
 export default function PetCard(props) {
@@ -10,23 +10,26 @@ export default function PetCard(props) {
 
     return (
     // props.petImage, props.desc, props.species, props.cost, props.name, props.id id = 
-        <Card maxW='xs' onClick={handleClick} cursor= "pointer" >
+        <Card maxW='xs' onClick={handleClick} cursor= "pointer" h={"400px"} >
     <CardBody shadow= "md" _hover={{shadow:"2xl"}} transition={".3s"}>
         <Image 
-        src={props.image}
+        src={`/uploads/${props.image}`}
         alt={props.desc}
         borderRadius='lg'
+        h={"200px"}
         />
         <Stack mt='6' spacing='3'>
         <Heading size='md'>{props.name}</Heading>
-        <Text>
-            {props.desc}
-        </Text>
+        <HStack>
+            <Text>{props.breed}</Text>
+            <Text>|</Text>
+            <Text>{props.age}</Text>
+        </HStack>
         <Text color='blue.600' fontSize='2xl'>
             {
             (props.cost > 0 ) ? 
-            <Text color='blue.600' fontSize='2xl'> ${props.cost} </Text> 
-            : <Text color='blue.600' fontSize='2xl'> FREE </Text>
+            <Text color='purple.500' fontSize='2xl'> ${props.cost} </Text> 
+            : <Text color='purple.500' fontSize='2xl'> FREE </Text>
             }
         </Text>
         </Stack>

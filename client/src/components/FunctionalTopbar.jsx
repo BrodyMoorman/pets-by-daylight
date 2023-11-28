@@ -33,7 +33,7 @@ import {
   
   
 
-  const Links = ['Home', 'Favorites', 'My Listings']
+  const Links = [{name:'Home', link:"/home"}]
   
   const NavLink = (props) => {
     const { children } = props
@@ -48,8 +48,8 @@ import {
           textDecoration: 'none',
           bg: useColorModeValue('gray.200', 'gray.700'),
         }}
-        href={'#'}>
-        {children}
+        href={children.link}>
+        {children.name}
       </Box>
     )
   }
@@ -57,6 +57,13 @@ import {
   export default function FunctionalTopbar(props) {
     const signOut = useSignOut()
     const auth = useAuthUser();
+
+    
+
+    const [ishamOpen, setIsHamOpen] = useState(false);
+
+    const onhamClose = () => setIsHamOpen(false);
+    const onhamOpen = () => setIsHamOpen(true);
 
     const [isOpen, setIsOpen] = useState(false);
   
@@ -89,14 +96,14 @@ import {
           </ModalContent>
         </Modal>
   */}
-        <Box bg={useColorModeValue('white', 'gray.900')} pr={4} w={["100vw","99.12vw"]} overflow={"hidden"}>
+        <Box bg={useColorModeValue('white', 'gray.900')} pr={4} w={["100vw","100vw"]} overflow={"hidden"}>
           <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
             <IconButton
               size={'md'}
               icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
               aria-label={'Open Menu'}
               display={{ md: 'none' }}
-              onClick={isOpen ? onClose : onOpen}
+              onClick={ishamOpen ? onhamClose : onhamOpen}
             />
             <HStack spacing={8} alignItems={'center'}>
               <Box><Image src={logo} h={16}></Image></Box>
@@ -145,13 +152,14 @@ import {
             </Flex>
           </Flex>
   
-          {isOpen ? (
+          {ishamOpen ? (
             <Box pb={4} display={{ md: 'none' }}>
               <Stack as={'nav'} spacing={4}>
                 {Links.map((link) => (
-                  <NavLink key={link}>{link}</NavLink>
+                  <NavLink key={link.name}>{link}</NavLink>
                 ))}
               </Stack>
+              <Box pt={4} pl={2}  fontWeight="semibold" onClick={onOpen}>New Listing</Box>
             </Box>
           ) : null}
         </Box>

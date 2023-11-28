@@ -39,7 +39,7 @@ export default function NewListingForm() {
     pet_color: '',
     pet_age: '',
     vaccinated: false,
-    adoption_fee: '',
+    adoption_fee: 0,
     pet_description: '',
     images: [],
     zip_code: ''
@@ -53,6 +53,10 @@ export default function NewListingForm() {
     }
     if(e.target.name === 'vaccinated') {
       setValues({ ...values, [e.target.name]: e.target.checked })
+      return
+    }
+    if(e.target.name === 'adoption_fee') {
+      setValues({ ...values, [e.target.name]: parseInt(e.target.value) })
       return
     }
     const { name, value } = e.target
@@ -110,12 +114,12 @@ export default function NewListingForm() {
         <FormControl isRequired>
           <FormLabel>Species</FormLabel>
           <Select placeholder='Select Species' name='pet_species' onChange={handleChange}>
-            <option>Dog</option>
-            <option>Cat</option>
-            <option>Bird</option>
-            <option>Fish</option>
-            <option>Reptile</option>
-            <option>Other</option>
+            <option>dog</option>
+            <option>cat</option>
+            <option>bird</option>
+            <option>fish</option>
+            <option>reptile</option>
+            <option>other</option>
           </Select>
         </FormControl>
         <HStack>
@@ -165,7 +169,7 @@ export default function NewListingForm() {
               fontSize='1.2em'
               children='$'
             />
-            <Input placeholder='Enter amount' name='adoption_fee' onChange={handleChange} />
+            <Input placeholder='Enter amount' type='number' name='adoption_fee' onChange={handleChange} />
           </InputGroup>
         </FormControl>
         <FormControl>

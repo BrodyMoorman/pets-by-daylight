@@ -3,7 +3,7 @@ const Listing = require("../models/listingsSchema");
 
 const listingFilter = async (req, res) => {
     try {
-
+        console.log(req.body);
         let animal = req.body.query.animal || "all";
         let gender = req.body.query.gender || "all";
         let age = req.body.query.age || "all";
@@ -17,7 +17,7 @@ const listingFilter = async (req, res) => {
             "fish",
             "reptile",
             "other",
-        ];
+        ]; 
 
         const genderOptions = [
             "male",
@@ -26,10 +26,10 @@ const listingFilter = async (req, res) => {
 
         // age needa to be added to the database
         const ageOptions = [
-            "baby",
-            "young",
-            "adult",
-            "senior",
+            "Baby",
+            "Young",
+            "Adult",
+            "Senior",
         ];
 
 
@@ -55,7 +55,7 @@ const listingFilter = async (req, res) => {
 
                 //these 2 need to be updated in database
                 //{"gender": {"$in": gender}},
-                //{"age": {"$in": age}}
+                {"pet_birthday": {"$in": age}}
             ]}
         )
         
@@ -75,7 +75,7 @@ const newListing = async (req, res) => {
             owner_phone: req.body.owner_phone,
             pet_name: req.body.pet_name,
             pet_breed: req.body.pet_breed,
-            pet_species: req.body.pet_species,
+            pet_species: req.body.pet_species, 
             female: isFemale,
             pet_color: req.body.pet_color,
             pet_birthday: req.body.pet_age,
@@ -92,9 +92,31 @@ const newListing = async (req, res) => {
     }
 }
 
+const getListing = async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+        res.json(listing);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
+const getListingsByUser = async (req, res) => {
+    try {
+        const listings = await Listing.find({ owner_id: req.params.id });
+        res.json(listings);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
 
 
 module.exports = {
     listingFilter,
     newListing,
+    getListing,
+    getListingsByUser,
 }

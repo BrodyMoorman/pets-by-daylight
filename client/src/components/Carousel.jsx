@@ -20,10 +20,11 @@ const settings = {
   slidesToScroll: 1,
 }
 
-export default function Carousel() {
+export default function Carousel(props) {
   // As we have used custom buttons, we need a reference variable to
   // change the state
   const [slider, setSlider] = React.useState(null)
+  const [cards, setCards] = React.useState(props.images)
 
   // These are the breakpoints which changes the position of the
   // buttons as the screen size changes
@@ -31,11 +32,8 @@ export default function Carousel() {
   const side = useBreakpointValue({ base: '30%', md: '10px' })
 
   // These are the images used in the slide
-  const cards = [
-    'https://images.unsplash.com/photo-1612852098516-55d01c75769a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDR8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    'https://images.unsplash.com/photo-1627875764093-315831ac12f7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDJ8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-    'https://images.unsplash.com/photo-1571432248690-7fd6980a1ae2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDl8fHxlbnwwfHx8fA%3D%3D&auto=format&fit=crop&w=900&q=60',
-  ]
+  console.log(props.images)
+
 
   return (
     <Box position={'relative'}  w={"600px"} h={"400px"} overflow={'hidden'}>
@@ -87,9 +85,13 @@ export default function Carousel() {
             backgroundRepeat="no-repeat"
             backgroundSize="cover"
             borderRadius={'xl'}
+            display={'flex'}
+            justifyContent={'center'}
+            alignItems={'center'}
+            
             
           >
-            <Image src={url} alt="image" borderRadius={"inherit"} />
+            <Image position={"relative"} left={"8.5%"} top={"3%"} src={"/uploads/"+url} alt="image" borderRadius={"inherit"}  objectFit={""}   />
             </Box>
         ))}
       </Slider>
