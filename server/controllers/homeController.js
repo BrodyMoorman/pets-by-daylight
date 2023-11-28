@@ -3,12 +3,12 @@ const Listing = require("../models/listingsSchema");
 
 const listingFilter = async (req, res) => {
     try {
-
-        let animal = req.query.animal || "all";
-        let gender = req.query.gender || "all";
-        let age = req.query.age || "all";
-        let fee = parseInt(req.query.fee) || 99999;
-        let search = req.query.search || "";
+        console.log(req.body);
+        let animal = req.body.query.animal || "all";
+        let gender = req.body.query.gender || "all";
+        let age = req.body.query.age || "all";
+        let fee = parseInt(req.body.query.fee) || 99999;
+        let search = req.body.query.search || "";
 
         const animalOptions = [
             "dog",
@@ -17,7 +17,7 @@ const listingFilter = async (req, res) => {
             "fish",
             "reptile",
             "other",
-        ];
+        ]; 
 
         const genderOptions = [
             "male",
@@ -26,26 +26,26 @@ const listingFilter = async (req, res) => {
 
         // age needa to be added to the database
         const ageOptions = [
-            "baby",
-            "young",
-            "adult",
-            "senior",
+            "Baby",
+            "Young",
+            "Adult",
+            "Senior",
         ];
 
 
         animal === "all"
             ? (animal = [...animalOptions])
-            : (animal = req.query.animal.split(","))
+            : (animal = req.body.query.animal.split(","))
 
 
         gender === "all" 
             ? (gender = [...genderOptions])
-            : (gender = req.query.gender.split(","));
+            : (gender = req.body.query.gender.split(","));
 
         
         age === "all" 
             ? (age = [...ageOptions])
-            : (age = req.query.age.split(","));
+            : (age = req.body.query.age.split(","));
         
         const petList = await Listing.find(
             {$and: [
@@ -55,18 +55,68 @@ const listingFilter = async (req, res) => {
 
                 //these 2 need to be updated in database
                 //{"gender": {"$in": gender}},
-                //{"age": {"$in": age}}
+                {"pet_birthday": {"$in": age}}
             ]}
         )
         
-        return petList;
+        return res.json(petList);
         //res.json(animal);
     } catch (err) {
         console.log(err);
         res.json(err);
     }
 }
+const newListing = async (req, res) => {
+    try {
+        const isFemale = (req.body.gender == "female")
+        const listing = await Listing.collection.insertOne({
+            owner_id: req.body.owner_id,
+            owner_email: req.body.owner_email,
+            owner_phone: req.body.owner_phone,
+            pet_name: req.body.pet_name,
+            pet_breed: req.body.pet_breed,
+            pet_species: req.body.pet_species, 
+            female: isFemale,
+            pet_color: req.body.pet_color,
+            pet_birthday: req.body.pet_age,
+            pet_description: req.body.pet_description,
+            vaccinated: req.body.vaccinated,
+            adoption_fee: req.body.adoption_fee,
+            image_url: req.body.images,
+            zip_code: req.body.zip_code,
+        });
+        res.json(listing);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
+const getListing = async (req, res) => {
+    try {
+        const listing = await Listing.findById(req.params.id);
+        res.json(listing);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
+const getListingsByUser = async (req, res) => {
+    try {
+        const listings = await Listing.find({ owner_id: req.params.id });
+        res.json(listings);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
+
 
 module.exports = {
     listingFilter,
+    newListing,
+    getListing,
+    getListingsByUser,
 }

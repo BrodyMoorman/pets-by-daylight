@@ -5,11 +5,19 @@ import { Search2Icon } from '@chakra-ui/icons'
 import FilterSelector from './FilterSelector'
 import { useState } from 'react'
 
-export default function PetFilter() {
+export default function PetFilter(props) {
     const addName = () => {
         console.log("Adding Name")
     }
     const [selected, setSelected] = useState([])
+    const [name, setName] = useState("")
+    const [query, setQuery] = useState({
+        animal : [],
+        gender: [],
+        age: [],
+        fee: [],
+        search: ""
+    })
 
     const clearSelected = () => {
         setSelected([])
@@ -19,13 +27,57 @@ export default function PetFilter() {
         return selected.includes(option)
     }
 
-    const callback = (option) => {
-        if (isSelected(option)) {
-            setSelected(selected.filter((item) => item !== option))
-        } else {
-            setSelected([...selected, option])
+    const setAnimalCallback = (option) => {
+        if(query.animal.includes(option)) {
+            setQuery({...query, animal: query.animal.filter((item) => item !== option)})
+        }else {
+        setQuery({...query, animal: [...query.animal, option]})
         }
     }
+
+    const setGenderCallback = (option) => {
+        if(query.gender.includes(option)) {
+            setQuery({...query, gender: query.gender.filter((item) => item !== option)})
+        }else {
+        setQuery({...query, gender: [...query.gender, option]})
+        }
+
+    }
+
+    const setAgeCallback = (option) => {
+        if(query.age.includes(option)) {
+            setQuery({...query, age: query.age.filter((item) => item !== option)})
+        } else {
+            setQuery({...query, age: [...query.age, option]})
+        }
+        
+            
+    }
+
+    const setFeeCallback = (option) => {
+        if(query.fee.includes(option)) {
+            setQuery({...query, fee: query.fee.filter((item) => item !== option)})
+        } else {
+        setQuery({...query, fee: [...query.fee, option]})
+        }
+    }
+
+    const handleSearch = () => {
+        let request = {
+
+                animal: query.animal.map((item) => item.name),
+                gender: query.gender.map((item) => item.name),
+                age: query.age.map((item) => item.name),
+                search: name,
+
+        }
+        props.callback(request)
+    }
+    const handleNameChange = (e) => {
+        setName(e.target.value)
+    }
+        
+
   return (
     <VStack p={4} alignItems={"flex-start"} shadow={'2xl'} borderRadius={"2xl"} bg={"white"} h={"fit-content"} >
         <Text fontSize={"2xl"} fontWeight={"semibold"} pb={2}>Filters</Text>
@@ -43,22 +95,20 @@ export default function PetFilter() {
             <Input
                 pr='4.5rem'
                 type={'text'}
+                onChange={handleNameChange}
+                placeholder='Search'
             />
-            <InputRightElement width='4.5rem'>
-                <Button  size='sm' onClick={addName} colorScheme='purple'>
-                    <Search2Icon />
-                </Button>
-            </InputRightElement>
+            
         </InputGroup>
         <Text fontWeight={"semibold"}>Animal:</Text>
-        <FilterSelector callback={callback} category="animal" />
+        <FilterSelector callback={setAnimalCallback} category="animal" />
         <Text fontWeight={"semibold"}>Gender:</Text>
-        <FilterSelector callback={callback} category="gender" />
+        <FilterSelector callback={setGenderCallback} category="gender" />
         <Text fontWeight={"semibold"}>Age:</Text>
-        <FilterSelector callback={callback} category="age" />
+        <FilterSelector callback={setAgeCallback} category="age" />
         <Text fontWeight={"semibold"}>Adoption Fee:</Text>
-        <FilterSelector callback={callback} category="fee" />
-        {(selected.length) && <Button colorScheme='purple' w={"full"} mt={4} onClick={() => clearSelected()}>Clear Filters</Button>}
+        <FilterSelector callback={setFeeCallback} category="fee" />
+        <Button colorScheme='purple' w={"full"} mt={4} onClick={handleSearch}>Apply Filter</Button>
     </VStack>
   )
 }
