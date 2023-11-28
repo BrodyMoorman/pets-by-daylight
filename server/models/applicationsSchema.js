@@ -2,8 +2,11 @@ const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
 const applicationsSchema = new Schema({
-    listing_id: Number,
-    user_id: Number,
+    listing_id: Schema.ObjectId,
+    user_id: Schema.ObjectId,
+    contact_email: String,
+    contact_phone: String,
+    message: String,
 })
 
 

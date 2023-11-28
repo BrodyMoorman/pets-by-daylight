@@ -33,7 +33,7 @@ import {
   
   
 
-  const Links = [{name:'Home', link:"/home"}]
+  const Links = [{name:'Home', link:"/home"}, {name:'My Listings', link:"/mylistings"}]
   
   const NavLink = (props) => {
     const { children } = props
@@ -82,7 +82,7 @@ import {
             <ModalHeader>Add New Listing</ModalHeader>
             <ModalCloseButton/>
             <ModalBody>
-              <NewListingForm/>
+              <NewListingForm close={onClose}/>
             </ModalBody>
           </ModalContent>
         </Modal>
