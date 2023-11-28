@@ -1,12 +1,45 @@
 import React from 'react'
-import {Box, Flex, VStack, HStack, Text, Button, Divider} from '@chakra-ui/react'
+import {Box, Flex, VStack, HStack, Text, Button, Divider
+, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
+useDisclosure, FormControl, FormLabel, Input, Textarea, useToast
+} from '@chakra-ui/react'
 import Carousel from './Carousel'
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+import { useAuthUser } from 'react-auth-kit'
 import axios from 'axios'
 
 
 export default function PetDisplay() {
+    const auth = useAuthUser()
+
+    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [inputs, setInputs] = useState({
+        contact_email: "",
+        contact_phone: "",
+        message: ""
+    })
+
+    const handleChange = (e) => {
+        setInputs({
+            ...inputs, [e.target.name]: e.target.value
+        })
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const query = inputs;
+        query.listing_id = id
+        query.user_id = auth()._id
+        axios.post('http://localhost:8000/application/new', query)
+            .then(res => {
+                console.log(res.data)
+                onClose()
+            })
+            .catch(err => console.log(err))
+    }
+
     const {id} = useParams()
     console.log(id)
     const [pet, setPet] = React.useState({})
@@ -88,8 +121,34 @@ export default function PetDisplay() {
             </HStack>
 
         </VStack>
-
+        <Button colorScheme='purple' onClick={onOpen}>Apply Now!</Button>
         </VStack>
+        <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Apply for {pet.pet_name}!</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <VStack w={"full"}>
+            <FormControl>
+                <FormLabel>Contact Email</FormLabel>
+                <Input name="contact_email" onChange={handleChange}/>
+            </FormControl>
+            <FormControl>
+                <FormLabel>Contact Phone</FormLabel>
+                <Input type='tel' name="contact_phone" onChange={handleChange}/>
+            </FormControl>
+            <FormControl>
+                <FormLabel>Message</FormLabel>
+                <Textarea name="message" onChange={handleChange}/>
+            </FormControl>
+            <Button colorScheme='purple' w={"full"} onClick={handleSubmit}>Submit</Button>
+            </VStack>
+          </ModalBody>
+
+         
+        </ModalContent>
+      </Modal>
          
     </Flex>
   )

@@ -1,5 +1,6 @@
 const { json } = require("express");
 const Listing = require("../models/listingsSchema");
+const Application = require("../models/applicationsSchema");
 
 const listingFilter = async (req, res) => {
     try {
@@ -112,6 +113,38 @@ const getListingsByUser = async (req, res) => {
     }
 }
 
+const newApplication = async (req, res) => {
+    try {
+        const application = await Application.collection.insertOne({
+            listing_id: req.body.listing_id,
+            user_id: req.body.user_id,
+            contact_email: req.body.contact_email,
+            contact_phone: req.body.contact_phone,
+            message: req.body.message,
+        });
+
+        // add application to listing applications array
+        const listing = await Listing.findById(req.body.listing_id);
+        listing.applications.push(application.insertedId);
+        await listing.save();
+
+        res.json(application);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
+const getApplication = async (req, res) => {
+    try {
+        const application = await Application.findById(req.params.id);
+        res.json(application);
+    } catch (err) {
+        console.log(err);
+        res.json(err);
+    }
+}
+
 
 
 module.exports = {
@@ -119,4 +152,6 @@ module.exports = {
     newListing,
     getListing,
     getListingsByUser,
+    newApplication,
+    getApplication,
 }

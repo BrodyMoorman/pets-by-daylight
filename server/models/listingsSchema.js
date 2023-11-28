@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
 const listingsSchema = new Schema ({
-    owner_id: Schema.ObjectId,
+    owner_id: String,
     owner_email: String,
     owner_phone: Number,
     pet_name: String,
@@ -17,6 +17,7 @@ const listingsSchema = new Schema ({
     //this needs to be updated to dynamic array of strings to support multiple pictures
     image_url: [String],
     zip_code: Number,
+    applications: [Schema.ObjectId],
 
 });
 

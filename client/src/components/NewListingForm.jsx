@@ -25,7 +25,7 @@ import {
   import axios from 'axios'
   import { useAuthUser } from 'react-auth-kit'
 
-export default function NewListingForm() {
+export default function NewListingForm(props) {
   const auth = useAuthUser()
 
   const [values, setValues] = useState({
@@ -80,7 +80,7 @@ export default function NewListingForm() {
           console.log(err)
         })
       }, 600)
-      
+      props.close()
 
     } catch (err) {
       console.log(err)

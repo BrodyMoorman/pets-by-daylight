@@ -1,11 +1,13 @@
-import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage, Input, HStack, Button } from '@chakra-ui/react'
+import { VStack, Text, FormControl, FormLabel, FormHelperText, FormErrorMessage, Input, useToast, HStack, Button } from '@chakra-ui/react'
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 
 
 
+
 export default function SignUpForm() {
+    const toast = useToast()
     const [isErrorEmail, setIsErrorEmail] = useState(false)
     const [inputs, setInputs] = useState({
         email: "",
@@ -31,10 +33,26 @@ export default function SignUpForm() {
                 password: password,
             })
             if (data.error) {
-                alert(data.error);
+                toast({
+                    title: 'Sign Up Error!',
+                    description: data.error,
+                    position: 'top',
+                    status: 'error',
+                    duration: 1500,
+                    isClosable: false,
+                  })
             } else {
-                alert("Sign Up Successful")
+                toast({
+                    title: 'Sign Up Successful!',
+                    description: "Redirecting...",
+                    position: 'top',
+                    status: 'success',
+                    duration: 750,
+                    isClosable: false,
+                  })
+                setTimeout(() => {
                 navigate('/login')
+                }, 775)
             }
         } catch (error) {
             console.log(error);

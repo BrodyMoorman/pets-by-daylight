@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const cors = require('cors');
 const { test, registerUser, loginUser, } = require('../controllers/authController');
-const { listingFilter, newListing, getListing, getListingsByUser  } = require('../controllers/homeController');
+const { listingFilter, newListing, getListing, getListingsByUser, newApplication, getApplication  } = require('../controllers/homeController');
 const multer = require("multer");
 
 router.use(
@@ -34,6 +34,8 @@ router.post("/home", listingFilter);
 router.post("/listing/new", newListing)
 router.get("/listing/:id", getListing);
 router.get("/listings/user/:id", getListingsByUser);
+router.post("/application/new", newApplication);
+router.get("/application/:id", getApplication);
 
 
 module.exports = router;
