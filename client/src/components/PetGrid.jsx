@@ -35,7 +35,7 @@ export default function PetGrid(props) {
             animal : [],
             gender: [],
             age: [],
-            fee: [],
+            fee: 500,
             search: ""
         })
     }, [])
@@ -79,6 +79,7 @@ export default function PetGrid(props) {
             q.query.age = ageString
         }
         q.query.search = request.search
+        q.query.fee = request.fee
 
 
         console.log(q)

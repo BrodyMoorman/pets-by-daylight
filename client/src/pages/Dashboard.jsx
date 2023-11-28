@@ -11,7 +11,7 @@ export default function Dashboard() {
 
   return (
     <FunctionalTopbar content = {
-      <Box w={"full"} overflow={"hidden"} display={"flex"} justifyContent={"flex-start"} flexDirection={"column"} alignItems={"center"}>
+      <Box w={"full"} overflow={"hidden"} minH={"95vh"} display={"flex"} justifyContent={"flex-start"} flexDirection={"column"} alignItems={"center"}>
       <PetGrid />
       </Box>
     } />

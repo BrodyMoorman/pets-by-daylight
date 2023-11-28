@@ -1,6 +1,6 @@
 import { VStack } from '@chakra-ui/react'
 import React from 'react'
-import { InputGroup, Input, InputRightElement, Button, Text, Flex, Tag, TagLabel, TagCloseButton, SimpleGrid } from "@chakra-ui/react"
+import { InputGroup, Input, InputRightElement, Button, Text, Flex, Tag, TagLabel, TagCloseButton, SimpleGrid, Slider, SliderMark, SliderTrack, SliderFilledTrack, SliderThumb } from "@chakra-ui/react"
 import { Search2Icon } from '@chakra-ui/icons'
 import FilterSelector from './FilterSelector'
 import { useState } from 'react'
@@ -10,6 +10,7 @@ export default function PetFilter(props) {
         console.log("Adding Name")
     }
     const [selected, setSelected] = useState([])
+    const [sliderValue, setSliderValue] = useState(500)
     const [name, setName] = useState("")
     const [query, setQuery] = useState({
         animal : [],
@@ -18,6 +19,12 @@ export default function PetFilter(props) {
         fee: [],
         search: ""
     })
+    const labelStyles = {
+        mt: '2',
+        ml: '-2.5',
+        fontSize: 'sm',
+      }
+    
 
     const clearSelected = () => {
         setSelected([])
@@ -69,6 +76,7 @@ export default function PetFilter(props) {
                 gender: query.gender.map((item) => item.name),
                 age: query.age.map((item) => item.name),
                 search: name,
+                fee: sliderValue
 
         }
         props.callback(request)
@@ -79,7 +87,7 @@ export default function PetFilter(props) {
         
 
   return (
-    <VStack p={4} alignItems={"flex-start"} shadow={'2xl'} borderRadius={"2xl"} bg={"white"} h={"fit-content"} >
+    <VStack p={6} alignItems={"flex-start"} shadow={'2xl'} borderRadius={"2xl"} bg={"white"} h={"fit-content"} >
         <Text fontSize={"2xl"} fontWeight={"semibold"} pb={2}>Filters</Text>
         <Flex maxW="270px" flexWrap={"wrap"}>
         {selected.map((option) => {
@@ -107,7 +115,32 @@ export default function PetFilter(props) {
         <Text fontWeight={"semibold"}>Age:</Text>
         <FilterSelector callback={setAgeCallback} category="age" />
         <Text fontWeight={"semibold"}>Adoption Fee:</Text>
-        <FilterSelector callback={setFeeCallback} category="fee" />
+        <Slider aria-label='slider-ex-6' defaultValue={500} onChange={(val) => setSliderValue(val)} max={500} mt={6}>
+        <SliderMark value={500} {...labelStyles}>
+          $500
+        </SliderMark>
+        <SliderMark value={250} {...labelStyles}>
+          $250
+        </SliderMark>
+        <SliderMark value={0} {...labelStyles}>
+          Free
+        </SliderMark>
+        <SliderMark
+          value={sliderValue}
+          textAlign='center'
+          bg='purple.400'
+          color='white'
+          mt='-10'
+          ml='-5'
+          w='12'
+        >
+          ${sliderValue}
+        </SliderMark>
+        <SliderTrack>
+          <SliderFilledTrack bg={"purple.400"} />
+        </SliderTrack>
+        <SliderThumb />
+      </Slider>
         <Button colorScheme='purple' w={"full"} mt={4} onClick={handleSearch}>Apply Filter</Button>
     </VStack>
   )

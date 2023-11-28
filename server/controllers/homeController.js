@@ -7,7 +7,7 @@ const listingFilter = async (req, res) => {
         let animal = req.body.query.animal || "all";
         let gender = req.body.query.gender || "all";
         let age = req.body.query.age || "all";
-        let fee = parseInt(req.body.query.fee) || 99999;
+        let fee = parseInt(req.body.query.fee);
         let search = req.body.query.search || "";
 
         const animalOptions = [
