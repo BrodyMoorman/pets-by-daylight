@@ -30,7 +30,7 @@ export default function MyListings() {
   return (
     <Flex gap={3} flexDir={"column"}>
         <Text fontSize={"4xl"}>My Listings</Text>
-        <SimpleGrid columns={3} spacing={10}>
+        <SimpleGrid columns={[1,3]} spacing={10}>
             {listings.map((listing, i) => (
                 <ListingWithApplications name={listing.pet_name} applications={listing.applications} key={i} />
             ))}

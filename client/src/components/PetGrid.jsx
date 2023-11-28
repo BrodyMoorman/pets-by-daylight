@@ -105,22 +105,7 @@ export default function PetGrid(props) {
         </Box>
         
         <Box>
-            <Flex w={"full"} justifyContent={"space-between"} alignItems={"flex-end"} mb={2}>
-                <Flex alignItems={"center"}>
-                    <Text fontSize={["md","xl"]}>Searching within&nbsp; </Text> <Text fontSize={"xl"} fontWeight={"semibold"}>{distance}mi&nbsp;</Text> <Text fontSize={"xl"}>of&nbsp; </Text><Text fontSize={"xl"} fontWeight={"semibold"}>{location}</Text>
-                    <EditIcon ml={4} color={"gray.500"} _hover={{color:"purple.400"}} cursor={"pointer"} fontSize={"xl"} onClick={onOpen} />
-                </Flex>
-                <Flex bg={"white"} p={2} w={"150px"} borderRadius={"lg"} shadow={"lg"}>
-                    <FormControl>
-                        <FormLabel mb={-1} fontWeight={"normal"} color={"gray.600"}>Sort By:</FormLabel>
-                        <Select  variant={"unstyled"} fontWeight={"semibold"} >
-                            <option value="option1">Nearest</option>
-                            <option value="option2">Newest Addition</option>
-                            <option value="option3">Oldest Addition</option>
-                        </Select>
-                    </FormControl>
-                </Flex>
-            </Flex>
+            <Button w={"full"} display={["block","none" ]}  onClick={onOpen}  colorScheme="purple" mb="2" variant="outline">Change Filters</Button>
             <SimpleGrid spacingY={"40px"} spacingX={"20px"}  columns={[1,4]} mb={8}>
             {
             listings.map((pet, index) => {
@@ -133,10 +118,10 @@ export default function PetGrid(props) {
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
-            <ModalHeader>Edit Location</ModalHeader>
+            <ModalHeader>Filters</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-            <LocationSelect callback={callback} distance={distance} zipCode={location} />
+            <PetFilter callback={search} />
             </ModalBody>
             </ModalContent>
         </Modal>
